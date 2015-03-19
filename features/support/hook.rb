@@ -7,11 +7,11 @@ Before do |scenario|
 end
 
 After do |scenario|
+  Browser.reset
   if scenario.failed?
     Cucumber.wants_to_quit = true if should_fail_fast?
     fail("#{scenario} failed.")
   end
-  Browser.reset
 end
 
 at_exit do
