@@ -1,15 +1,7 @@
 module CommonUtils
   def raise_error(message)
-    save_screenshot
+    Browser.save_screenshot
     raise "#{message} !!! Please refer to the above screenshot for more details."
-  end
-
-  def save_screenshot
-    begin
-      $browser.screenshot.save(screenshot_file_path)
-    rescue Exception => exception
-      puts "Unable to take screenshot due to: #{exception.message}"
-    end
   end
 
   def all_params(table = {})

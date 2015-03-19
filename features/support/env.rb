@@ -14,11 +14,13 @@ include TestManager
 prepare_results_dir
 
 # Load the utilities
-Dir.glob(File.join(utils_dir, '*.rb')).each do |file|
+Dir.glob(File.join(utils_dir, '**', '*.rb')).each do |file|
   require file
 end
 include CommonUtils
 include Verifier
 
-# Initialize the pages
-require File.join(root_folder, 'page_helper.rb')
+# Load the page modules
+Dir.glob(File.join(pages_dir, '**', '*.rb')).each do |file|
+  require file
+end

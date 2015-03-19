@@ -11,12 +11,9 @@ After do |scenario|
     Cucumber.wants_to_quit = true if should_fail_fast?
     fail("#{scenario} failed.")
   end
-
-  sleep 1
-  $browser.goto('about:blank')
-  $browser.cookies.clear
+  Browser.reset
 end
 
 at_exit do
-  $browser.close
+  Browser.close
 end
