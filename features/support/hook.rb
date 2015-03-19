@@ -10,7 +10,7 @@ After do |scenario|
   Browser.reset
   if scenario.failed?
     Cucumber.wants_to_quit = true if should_fail_fast?
-    fail("#{scenario} failed.")
+    fail("Scenario: #{get_scenario_name(scenario)} failed.")
   end
 end
 
