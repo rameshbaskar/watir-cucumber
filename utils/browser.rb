@@ -58,7 +58,7 @@ module Browser
 
   def self.save_screenshot
     begin
-      file_path = screenshot_file_path
+      file_path = TestManager.screenshot_file_path
       puts "\nScreenshot path: #{file_path}\n\n"
       @current_session.screenshot.save(file_path)
       puts "\nCurrent URL: #{url}\n\n"

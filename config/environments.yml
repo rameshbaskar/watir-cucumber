@@ -1,0 +1,39 @@
+local_dev:
+  app:
+    base_url: 'http://localhost:3000'
+  database:
+    host: localhost
+    port: 1521
+    name: my_database
+    username: db_user
+    password: db_password
+
+ci:
+  app:
+    base_url: 'http://ci-env'
+  database:
+    host: ci-database
+    port: 1521
+    name: my_database
+    username: db_user
+    password: db_password
+
+qa:
+  app:
+    base_url: 'http://qa-env'
+  database:
+    host: qa-database
+    port: 1521
+    name: my_database
+    username: db_user
+    password: db_password
+
+uat:
+  app:
+    base_url: 'http://uat-env'
+  database:
+    host: uat-database
+    port: 1521
+    name: my_database
+    username: db_user
+    password: db_password
