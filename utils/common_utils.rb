@@ -13,4 +13,13 @@ module CommonUtils
   def current_time
     Time.now.strftime('%Y%m%d%H%M%s').to_s
   end
+
+  def sleep_for(seconds)
+    puts "Sleeping for #{seconds} seconds"
+    seconds.to_i.times do
+      putc '*'
+      sleep 1
+    end
+    puts "\n"
+  end
 end

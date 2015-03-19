@@ -14,10 +14,14 @@ module Browser
   end
 
   def self.reset
-    sleep 1
+    sleep_for 1
     @browser.goto('about:blank')
     @browser.cookies.clear
-    sleep 1
+    sleep_for 1
+  end
+
+  def self.url
+    @browser.url
   end
 
   def self.save_screenshot
@@ -25,6 +29,7 @@ module Browser
       file_path = screenshot_file_path
       puts "\nScreenshot path: #{file_path}\n\n"
       @browser.screenshot.save(file_path)
+      puts "\nCurrent URL: #{url}\n\n"
     rescue Exception => exception
       puts "Unable to take screenshot due to: #{exception.message}"
     end
