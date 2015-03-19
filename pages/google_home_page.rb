@@ -1,14 +1,17 @@
 module GoogleHomePage
-  @browser = Browser.instance
-  @tb_search = @browser.text_field(name: 'q')
-  @btn_search = @browser.button(name: 'btnG')
+  def self.init
+    @tb_search = text_field_for(name: 'q')
+    @btn_search = button_for(name: 'btnG')
+  end
 
   def self.visit
-    @browser.goto('http://www.google.com.sg')
+    Browser.goto 'http://www.google.com.sg'
+    init
   end
 
   def self.visit_invalid_page
-    @browser.goto('http://test.test')
+    Browser.goto 'http://test.test'
+    init
   end
 
   def self.loaded?(timeout = nil)

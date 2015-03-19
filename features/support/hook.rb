@@ -7,7 +7,7 @@ Before do |scenario|
 end
 
 After do |scenario|
-  Browser.reset
+  Browser.reset_all
   if scenario.failed?
     Cucumber.wants_to_quit = true if should_fail_fast?
     fail("Scenario: #{get_scenario_name(scenario)} failed.")
@@ -15,5 +15,5 @@ After do |scenario|
 end
 
 at_exit do
-  Browser.close
+  Browser.close_all_sessions
 end

@@ -10,6 +10,11 @@ module CommonUtils
     table
   end
 
+  def as(session_key)
+    Browser.set_current_session_as session_key
+    yield
+  end
+
   def current_time
     Time.now.strftime('%Y%m%d%H%M%s').to_s
   end

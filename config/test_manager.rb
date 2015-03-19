@@ -1,5 +1,6 @@
 module TestManager
   def prepare_results_dir
+    puts 'Preparing results folder...'
     FileUtils.rm_rf results_dir
     FileUtils.mkpath screenshots_dir
   end

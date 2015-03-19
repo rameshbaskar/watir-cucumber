@@ -19,6 +19,11 @@ Dir.glob(File.join(utils_dir, '**', '*.rb')).each do |file|
 end
 include CommonUtils
 include Verifier
+include PageHelper
+
+# Set the default browser session
+puts 'Creating a default browser session...'
+Browser.set_current_session_as 'default_session'
 
 # Load the page modules
 Dir.glob(File.join(pages_dir, '**', '*.rb')).each do |file|
