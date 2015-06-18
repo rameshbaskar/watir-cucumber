@@ -10,19 +10,14 @@ module CommonUtils
     table
   end
 
-  def as(session_key)
-    Browser.set_current_session_as session_key
-    yield
-  end
-
   def current_time
-    Time.now.strftime('%Y%m%d%H%M%s').to_s
+    Time.now.strftime("%Y%m%d%H%M%s").to_s
   end
 
   def sleep_for(seconds)
     puts "Sleeping for #{seconds} seconds"
     seconds.to_i.times do
-      putc '*'
+      putc "*"
       sleep 1
     end
     puts "\n"

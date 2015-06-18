@@ -1,5 +1,5 @@
 def get_scenario_name(scenario)
-  scenario.respond_to?('scenario_outline') ? "\"#{scenario.scenario_outline.name}\"" : "\"#{scenario.name}\""
+  scenario.respond_to?("scenario_outline") ? "\"#{scenario.scenario_outline.name}\"" : "\"#{scenario.name}\""
 end
 
 Before do |scenario|
@@ -9,7 +9,7 @@ end
 After do |scenario|
   Browser.reset_all
   if scenario.failed?
-    Cucumber.wants_to_quit = true if should_fail_fast?
+    Cucumber.wants_to_quit = true if TestManager.should_fail_fast?
     fail("Scenario: #{get_scenario_name(scenario)} failed.")
   end
 end

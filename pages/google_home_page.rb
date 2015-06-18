@@ -1,30 +1,25 @@
-module GoogleHomePage
-  def self.init
-    @tb_search = text_field_for(name: 'q')
-    @btn_search = button_for(name: 'btnG')
+class GoogleHomePage < BasePage
+  def initialize
+    @tb_search = browser.text_field(name: "q")
+    @btn_search = browser.button(name: "btnG")
   end
 
-  def self.visit
-    Browser.goto 'http://www.google.com.sg'
-    init
+  def visit
+    super("http://www.google.com.sg")
   end
 
   def self.visit_invalid_page
-    Browser.goto 'http://test.test'
-    init
+    visit("http://test.test")
   end
 
-  def self.loaded?(timeout = nil)
-    Browser.exists?(@tb_search, timeout)
+  def loaded?
+    exists?(@tb_search)
   end
 
   def self.search_for(text)
-    if loaded?
-      @tb_search.set(text)
-      @btn_search.click
-    else
-      raise_error('Google home page not loaded properly')
-    end
+    raise_error("Home page not loaded") unless loaded?
+    @tb_search.set(text)
+    @btn_search.click
   end
 
   def self.searched?(text)

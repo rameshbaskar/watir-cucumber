@@ -1,55 +1,52 @@
 module Browser
+  DEFAULT_SESSION_KEY = "default"
+
   @current_session = nil
   @current_key = nil
   @sessions = {}
 
-  def self.set_current_session_as(key)
+  def self.set_context_as(key)
+    puts "Setting current session key as #{key} ..."
     @current_key = key
-    if session_exists?(key)
-      puts "Found an existing session for #{key}. Reusing the same session..."
-      @current_session = @sessions[key]
-    else
-      puts "Looks like a browser session for #{key} is not instantiated yet. Launching a new session now..."
-      @current_session = Watir::Browser.new
-      sleep 1
-      @current_session.goto('about:blank')
-      sleep 1
-      @sessions[key] = @current_session
-    end
   end
 
   def self.browser
-    raise 'No browser session available !!!' if @current_session.nil?
+    raise "No session context set. Aborting !!!" if @current_key.nil?
+    if @sessions.has_key?(@current_key)
+      @current_session = @sessions[@current_key]
+    else
+      puts "Browser not launched yet. Launching a new session now..."
+      @current_session = Watir::Browser.new(:firefox)
+      @sessions[@current_key] = @current_session
+    end
     @current_session
   end
 
-  def self.goto(url)
-    puts "Opening URL: #{url} ..."
-    @current_session.goto url
+  def self.close
+    close_session_for @current_key
+    @current_session = nil
+    set_context_as DEFAULT_SESSION_KEY
   end
 
-  def self.close_current_session
-    puts 'Closing current browser session...'
-    @current_session.close
-    @sessions.delete(@current_key)
+  def self.quit
+    puts "Closing all sessions..."
+    @sessions.each_value { |session| session.close unless session.nil? }
     @current_session = nil
     @current_key = nil
-  end
-
-  def self.close_all_sessions
-    puts 'Closing all browser sessions...'
-    @sessions.each_value { |session| session.close }
     @sessions = {}
   end
 
-  def self.reset_all
-    puts 'Resetting all browser sessions...'
-    @sessions.each_value do |session|
-      sleep 1
-      session.goto('about:blank')
-      session.cookies.clear
-      sleep 1
+  def self.reset_sessions
+    puts "Resetting all sessions..."
+    @sessions.each_pair do |key, session|
+      if key == DEFAULT_SESSION_KEY
+        session.goto("about:blank")
+        session.cookies.clear
+      else
+        close_session_for key
+      end
     end
+    set_context_as DEFAULT_SESSION_KEY
   end
 
   def self.url
@@ -67,19 +64,17 @@ module Browser
     end
   end
 
-  def self.exists?(element, timeout = nil)
-    timeout ||= 10
-    begin
-      return element.wait_until_present(timeout)
-    rescue Exception => exception
-      puts exception.message
-      return false
-    end
+  def self.as(key)
+    set_context_as key
+    yield
+    set_context_as DEFAULT_SESSION_KEY
   end
 
   private
 
-  def self.session_exists?(key)
-    @sessions.has_key? key
+  def self.close_session_for(key)
+    puts "Closing #{key} session..."
+    @sessions[key].close
+    @sessions.delete(key)
   end
 end

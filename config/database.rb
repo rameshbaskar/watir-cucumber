@@ -3,13 +3,13 @@ class Database < ActiveRecord::Base
 
   begin
     self.establish_connection(
-        host: TestManager.database_host,
-        port: TestManager.database_port,
-        name: TestManager.database_name,
-        username: TestManager.database_username,
-        password: TestManager.database_password
+        host: TestManager.db_host,
+        port: TestManager.db_port,
+        name: TestManager.db_name,
+        username: TestManager.db_username,
+        password: TestManager.db_password
     )
-  rescue Exception => exception
+  rescue => exception
     raise "Unable to connect to the database due to: #{exception.message}"
   end
 end

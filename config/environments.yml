@@ -1,39 +1,33 @@
+defaults: &defaults
+  db_adapter: postgresql
+  db_encoding: unicode
+  db_pool: 5
+  db_host: localhost
+  db_port: 3306
+  db_username: postgres
+  db_password: postgres
+  db_name: app_database
+  app_base_url: 'http://localhost:3001'
+
 local_dev:
-  app:
-    base_url: 'http://localhost:3000'
-  database:
-    host: localhost
-    port: 1521
-    name: my_database
-    username: db_user
-    password: db_password
+  <<: *defaults
 
 ci:
-  app:
-    base_url: 'http://ci-env'
-  database:
-    host: ci-database
-    port: 1521
-    name: my_database
-    username: db_user
-    password: db_password
+  <<: *defaults
+  db_host: database.ci
+  app_base_url: 'http://app-proxy.ci'
 
 qa:
-  app:
-    base_url: 'http://qa-env'
-  database:
-    host: qa-database
-    port: 1521
-    name: my_database
-    username: db_user
-    password: db_password
+  <<: *defaults
+  db_host: database.qa
+  app_base_url: 'http://app-proxy.qa'
+
+showcase:
+  <<: *defaults
+  db_host: database.showcase
+  app_base_url: 'http://app-proxy.showcase'
 
 uat:
-  app:
-    base_url: 'http://uat-env'
-  database:
-    host: uat-database
-    port: 1521
-    name: my_database
-    username: db_user
-    password: db_password
+  <<: *defaults
+  db_host: database.uat
+  app_base_url: 'http://app-proxy.uat'
