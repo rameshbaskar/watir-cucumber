@@ -55,7 +55,7 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     thread_safe (0.3.6)
-    tzinfo (1.2.6)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     watir-webdriver (0.9.9)
       selenium-webdriver (>= 2.46.2)
